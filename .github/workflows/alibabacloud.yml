@@ -1,0 +1,39 @@
+name: tag image and push to aliacr
+
+on:
+  workflow_dispatch:
+    inputs:
+      region-id:
+        description: 'acr region'
+        default: 'cn-hangzhou'
+        required: true
+      pull-image:
+        description: 'Image to pull'
+        default: 'vesoft/nebula-metad:v3.8.0'
+        required: true
+      push-image:
+        description: 'Image to push'
+        # 修改为自己的阿里云镜像仓库地址
+        default: 'registry.cn-zhangjiakou.aliyuncs.com/zhage_liu/nebula/nebula-metad:v3.8.0'
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+    # 1.1 Login to ACR
+    - name: Login to ACR with the AccessKey pair
+      uses: aliyun/acr-login@v1
+      with:
+        region-id: "${{ github.event.inputs.region-id }}"
+        access-key-id: "${{ secrets.ACCESS_KEY_ID }}"
+        access-key-secret: "${{ secrets.ACCESS_KEY_SECRET }}"
+
+    # 1.2 Buid and push image to ACR
+    - name: Build and push image to ACR
+      run: |
+        docker pull ${{ github.event.inputs.pull-image }}
+        docker tag  ${{ github.event.inputs.pull-image }}  ${{ github.event.inputs.push-image }}
+        docker push ${{ github.event.inputs.push-image }}
