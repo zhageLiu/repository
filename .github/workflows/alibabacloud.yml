@@ -30,6 +30,17 @@ jobs:
         region-id: "${{ github.event.inputs.region-id }}"
         access-key-id: "${{ secrets.ACCESS_KEY_ID }}"
         access-key-secret: "${{ secrets.ACCESS_KEY_SECRET }}"
+        
+    - name: Verify ACR login
+      run: |
+        echo "Verifying ACR login..."
+        docker login --username=${{ secrets.ACCESS_KEY_ID }} --password=${{ secrets.ACCESS_KEY_SECRET }} registry.${{ github.event.inputs.region-id }}.aliyuncs.com
+        if [ $? -eq 0 ]; then
+          echo "ACR login successful."
+        else
+          echo "ACR login failed. Please check your credentials."
+          exit 1
+        fi
 
     # 1.2 Buid and push image to ACR
     - name: Build and push image to ACR
