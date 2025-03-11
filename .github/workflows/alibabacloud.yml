@@ -5,7 +5,7 @@ on:
     inputs:
       region-id:
         description: 'acr region'
-        default: 'cn-hangzhou'
+        default: 'cn-zhangjiakou'
         required: true
       pull-image:
         description: 'Image to pull'
