@@ -14,7 +14,7 @@ on:
       push-image:
         description: 'Image to push'
         # 修改为自己的阿里云镜像仓库地址
-        default: 'registry.cn-hangzhou.aliyuncs.com/nebula_zhs/nebula-metad:v3.8.0'
+        default: 'registry.cn-zhangjiakou.aliyuncs.com/zhage_liu/nebula/nebula-metad:v3.8.0'
         required: true
 
 jobs:
