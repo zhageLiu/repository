@@ -31,6 +31,11 @@ jobs:
         access-key-id: "${{ secrets.ACCESS_KEY_ID }}"
         access-key-secret: "${{ secrets.ACCESS_KEY_SECRET }}"
         
+    - name: Debug - Output environment variables
+      run: |
+        echo "ACCESS_KEY_ID is set: ${{ !isEmpty(secrets.ACCESS_KEY_ID) }}"
+        echo "ACCESS_KEY_SECRET is set: ${{ !isEmpty(secrets.ACCESS_KEY_SECRET) }}"
+
     - name: Verify ACR login
       run: |
         echo "Verifying ACR login..."
